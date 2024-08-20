@@ -16,10 +16,11 @@ export class AuthController {
     userLogin(@Req() req: Request){
         return req.user
     }
-    // userLogin(@Body() AuthDataDto: AuthDataDto){
-        // const user = this.authService.validateUser(AuthDataDto);
-        // if(!user) throw new HttpException('invalid credentials', 401);
-        // return user
+    // userLogin(@Body() username: string, password: string){
+    //     const user = this.authService.validateUser(username, password);
+    //     if(!user) throw new HttpException('invalid credentials', 401);
+    //     return user
+    // }
 
     @Get('status')
     @UseGuards(jwtAuthGuard)

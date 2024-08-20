@@ -5,15 +5,18 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './strategies/local.strategy';
 import { jwtStrategy } from './strategies/jwt.strategy';
+import { UserModel } from 'src/models/user.model';
+import { SequelizeModule } from '@nestjs/sequelize';
+
 
 @Module({
   imports: [
+    SequelizeModule.forFeature([UserModel]),
     PassportModule,
     JwtModule.register({
       secret: '1234',
       signOptions: { expiresIn: '1h'}
-    }
-    )
+    })
   ],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy, jwtStrategy],
