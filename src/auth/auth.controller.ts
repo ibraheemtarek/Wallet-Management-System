@@ -1,0 +1,28 @@
+import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { LocalGuard } from './guards/local.guard';
+import { Request } from 'express';
+import { jwtAuthGuard } from './guards/jwt.guard';
+
+@Controller('auth')
+export class AuthController {
+  constructor(private authService: AuthService) {}
+
+  @Post('login')
+  @UseGuards(LocalGuard)
+  userLogin(@Req() req: Request) {
+    return req.user;
+  }
+  // userLogin(@Body() username: string, password: string){
+  //     const user = this.authService.validateUser(username, password);
+  //     if(!user) throw new HttpException('invalid credentials', 401);
+  //     return user
+  // }
+
+  @Get('status')
+  @UseGuards(jwtAuthGuard)
+  userStatus(@Req() req: Request) {
+    console.log('inside auth controller');
+    return req.user;
+  }
+}
